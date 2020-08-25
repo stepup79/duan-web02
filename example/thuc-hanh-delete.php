@@ -12,11 +12,11 @@
 
     // Truy vấn database để lấy danh sách
     // 1. Include file cấu hình kết nối đến database, khởi tạo kết nối $conn
-    // include_once(__DIR__ . '/../dbconnect.php');
-    include_once(__DIR__ . '/dbconnect.php');
+    include_once(__DIR__ . '/../dbconnect.php');
+    // include_once(__DIR__ . '/dbconnect.php');
 
     // 2. Chuẩn bị QUERY
-    $httt_ma = 5;
+    $httt_ma = 4;
     $sql =<<<GICUNGDC
         DELETE FROM hinhthucthanhtoan
         WHERE httt_ma = $httt_ma;

@@ -12,8 +12,8 @@
 
     // Truy vấn database để lấy danh sách
     // 1. Include file cấu hình kết nối đến database, khởi tạo kết nối $conn
-    // include_once(__DIR__ . '/../dbconnect.php');
-    include_once(__DIR__ . '/dbconnect.php');
+    include_once(__DIR__ . '/../dbconnect.php');
+    // include_once(__DIR__ . '/dbconnect.php');
 
     // 2. Chuẩn bị QUERY
     $sql =<<<GICUNGDC
@@ -28,7 +28,7 @@ GICUNGDC;
     // Ta sẽ tạo 1 mảng array để chứa các dữ liệu được trả về
     $data = [];
     while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
-        $data = array(
+        $data[] = array(
             'ma' => $row['MaThanhToan'],
             'ten' => $row['TenThanhToan'],
         );
@@ -37,15 +37,17 @@ GICUNGDC;
     // print_r($data);die;
 ?>
 
-    <table border="1">
+    <table border="1" width="100%">
     <tr>
         <th>Mã thanh toán</th>
         <th>Tên thanh toán</th>
     </tr>
     <?php foreach($data as $item): ?>
     <tr>
-        <td><?php echo $item['ma'] ?></td>
-        <td><?php echo $item['ten'] ?></td>      
+        
+        <td><?php echo $item['ma']; ?></td>
+        <td><?= $item['ten']; ?></td>
+      
     </tr>
     <?php endforeach; ?>
     </table>
