@@ -44,9 +44,13 @@ GICUNGDC;
     </tr>
     <?php foreach($data as $item): ?>
     <tr>
-        
+        <!-- Dấu '=' tương ứng với php echo -->
         <td><?php echo $item['ma']; ?></td>
         <td><?= $item['ten']; ?></td>
+        <td>
+            <a href="xu-ly-delete.php?idmuonxoa=<?= $item['ma'] ?>">Xóa</a>
+            <a href="xu-ly-update.php?idmuonxoa=<?= $item['ma'] ?>">Sửa</a>
+        </td>
       
     </tr>
     <?php endforeach; ?>
