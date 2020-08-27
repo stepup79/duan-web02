@@ -9,7 +9,7 @@
 <body>
     
 <?php
-
+    //Select lấy dữ liệu của id muốn xóa vào ô input
     //Lấy id muốn xóa
     $idmuonxoa = $_GET['idmuonxoa'];
 
@@ -40,9 +40,9 @@ GICUNGDC;
 
 ?>
 
-<h2>Thực hành form Insert</h2>
+<h2>Thực hành form Update</h2>
     <form name="frmUpdate" id="frmUpdate" method="post" action="">
-        <table>
+        <table border="1" cellspacing=0>
             <tr>
                 <td>Sửa hình thức thanh toán</td>
             </tr>
@@ -72,7 +72,6 @@ GICUNGDC;
         mysqli_query($conn, $sql);
     }
 ?>
-
 
 </body>
 </html>
