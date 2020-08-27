@@ -41,6 +41,7 @@ GICUNGDC;
     <tr>
         <th>Mã thanh toán</th>
         <th>Tên thanh toán</th>
+        <th>Hành động</th>
     </tr>
     <?php foreach($data as $item): ?>
     <tr>
