@@ -32,7 +32,7 @@ GICUNGDC;
     // Ta sẽ tạo 1 mảng array để chứa các dữ liệu được trả về
     $data = [];
     while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
-        $data = array( // Lấy 1 dòng dữ liệu nên data ko có mảng []
+        $data = array( // Lấy 1 dòng dữ liệu nên data ko có mảng data[]
             'ma' => $row['MaThanhToan'],
             'ten' => $row['TenThanhToan'],
         );

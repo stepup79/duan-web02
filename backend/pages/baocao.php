@@ -18,7 +18,7 @@
             <?php include_once(__DIR__ . '/../layouts/partials/sidebar.php'); ?>
             <!-- End sidebar -->
             <div class="col-md-8">
-                <h2>NỘI DUNG</h2>
+                <h2>NỘI DUNG BÁO CÁO</h2>
             </div>
         </div>
     </div>
