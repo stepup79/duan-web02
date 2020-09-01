@@ -159,7 +159,8 @@
 
     <?php
     // Khi người dùng nhấn button Lưu
-    if(isset($_POST['btnLuu']) && (!isset($errors)) || (empty($errors))) {
+    if(isset($_POST['btnLuu']) && (!isset($errors) || (empty($errors))) 
+    )   {
         // VALIDATE dữ liệu đã hợp lệ
         // Thực thi câu lệnh SQL QUERY
         // 2. Chuẩn bị QUERY
