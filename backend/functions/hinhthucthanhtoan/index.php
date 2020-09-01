@@ -59,8 +59,8 @@ EOT;
                             <td><?php echo $item['ma']; ?></td>
                             <td><?= $item['ten']; ?></td>
                             <td>
-                                <a href="edit.php?idmuonxoa=<?= $item['ma'] ?>">Xóa</a>
-                                <a href="delete.php?idmuonxoa=<?= $item['ma'] ?>">Sửa</a>
+                                <a href="edit.php?idmuonxoa=<?= $item['ma'] ?>">Sửa</a>
+                                <a href="delete.php?idmuonxoa=<?= $item['ma'] ?>">Xóa</a>
                             </td>
                         
                         </tr>
