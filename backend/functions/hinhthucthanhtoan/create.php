@@ -19,25 +19,22 @@
             <!-- End sidebar -->
             <div class="col-md-8">
                 <h2>Thực hành form Insert</h2>
-                    <form name="frmThem" id="frmThem" method="post" action="">
-                        <table>
-                            <tr>
-                                <td><label for="httt_ten">Hình thức thanh toán</label></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                <div class="form-group">                                    
-                                    <input type="text" class="form-control" id="httt_ten" name="httt_ten">
-                                </div>
-                                    <button name="btnLuu" id="btnLuu" class="btn btn-primary">Lưu dữ liệu</button>
-                                    <a href="index.php" class="btn btn-outline-primary">Quay về danh sách</a>
-                                </td>
-                            </tr>
-                        </table>
-                    </form>
-
-                    
-                                
+                <form name="frmThem" id="frmThem" method="post" action="">
+                    <table>
+                        <tr>
+                            <td><label for="txt_httt_ten">Hình thức thanh toán</label></td>
+                        </tr>
+                        <tr>
+                            <td>
+                            <div class="form-group">                                    
+                                <input type="text" class="form-control" id="txt_httt_ten" name="txt_httt_ten">
+                            </div>
+                                <button name="btnLuu" id="btnLuu" class="btn btn-primary">Lưu dữ liệu</button>
+                                <a href="index.php" class="btn btn-outline-primary">Quay về danh sách</a>
+                            </td>
+                        </tr>
+                    </table>
+                </form>                                                    
             </div>
         </div>
     </div>
@@ -97,7 +94,7 @@
         // 2. Nếu người dùng có bấm nút "Lưu dữ liệu" thì kiểm tra VALIDATE dữ liệu
         if(isset($_POST['btnLuu'])) {
         // Lấy dữ liệu người dùng hiệu chỉnh gởi từ REQUEST POST
-        $httt_ten = $_POST['httt_ten'];
+        $httt_ten = $_POST['txt_httt_ten'];
 
         // Kiểm tra ràng buộc dữ liệu (Validation)
         // Tạo biến lỗi để chứa thông báo lỗi
@@ -106,7 +103,7 @@
         // Validate tên Hình thức sản phẩm   
         // required
             if (empty($httt_ten)) {
-                $errors['httt_ten'][] = [
+                $errors['txt_httt_ten'][] = [
                 'rule' => 'required',
                 'rule_value' => true,
                 'value' => $httt_ten,
@@ -115,7 +112,7 @@
             }
         // minlength 3
             if (!empty($httt_ten) && strlen($httt_ten) < 3) {
-                $errors['httt_ten'][] = [
+                $errors['txt_httt_ten'][] = [
                 'rule' => 'minlength',
                 'rule_value' => 3,
                 'value' => $httt_ten,
@@ -124,7 +121,7 @@
             }
         // maxlength 50
             if (!empty($httt_ten) && strlen($httt_ten) > 50) {
-                $errors['httt_ten'][] = [
+                $errors['txt_httt_ten'][] = [
                 'rule' => 'maxlength',
                 'rule_value' => 50,
                 'value' => $httt_ten,
@@ -173,7 +170,7 @@
 
         // Sau khi cập nhật dữ liệu, tự động điều hướng về trang Danh sách
         // Điều hướng bằng Javascript
-        // echo '<script>location.href = "index.php";</script>';
+        echo '<script>location.href = "index.php";</script>';
         }
     ?>
 
