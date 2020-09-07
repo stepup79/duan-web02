@@ -22,15 +22,15 @@
         --- 
         */
         // Chuẩn bị câu truy vấn Loại sản phẩm
-        $sqlLoaisanpham = "SELECT * FROM loaisanpham";
+        $sqlLoaiSanPham = "SELECT * FROM loaisanpham";
         // Thực thi câu lệnh sql
-        $resultLoaisanpham = mysqli_query($conn, $sqlLoaisanpham);
+        $resultLoaiSanPham = mysqli_query($conn, $sqlLoaiSanPham);
         // Khi thực thi các truy vấn dạng SELECT, dữ liệu lấy về cần phải phân tích để sử dụng
         // Thông thường, chúng ta sẽ sử dụng vòng lặp while để duyệt danh sách các dòng dữ liệu được SELECT
         // Ta sẽ tạo 1 mảng array để chứa các dữ liệu được trả về
-        $dataLoaisanpham = [];
+        $dataLoaiSanPham = [];
         while($rowLoaiSanPham = mysqli_fetch_array($resultLoaiSanPham, MYSQLI_ASSOC)) {
-            $dataLoaisanpham[] = array(
+            $dataLoaiSanPham[] = array(
                 'lsp_ma' => $rowLoaiSanPham['lsp_ma'],
                 'lsp_ten' => $rowLoaiSanPham['lsp_ten'],
                 'lsp_mota' => $rowLoaiSanPham['lsp_mota'],
@@ -105,11 +105,6 @@
                 <h2>Thêm mới sản phẩm</h2>
                 <form name="frmThemsp" id="frmThemsp" method="POST" action="">
                     <div class="form-group">
-                        <label for="sp_ma">Mã Sản phẩm</label>
-                        <input type="text" class="form-control" id="sp_ma" name="sp_ma" placeholder="Mã Sản phẩm" readonly>
-                        <small id="sp_maHelp" class="form-text text-muted">Mã Sản phẩm không được hiệu chỉnh.</small>
-                    </div>
-                    <div class="form-group">
                         <label for="sp_ten">Tên Sản phẩm</label>
                         <input type="text" class="form-control" id="sp_ten" name="sp_ten" placeholder="Tên Sản phẩm">
                     </div>
@@ -168,17 +163,9 @@
         </div>
     </div>
 
-    <!-- footer -->
-    <?php include_once(__DIR__ . '/../../layouts/partials/footer.php'); ?>
-    <!-- End footer -->
-
-
-    <?php include_once(__DIR__ . '/../../layouts/scripts.php'); ?>
-
     <?php
         // 2. Nếu người dùng có bấm nút Đăng ký thì thực thi câu lệnh UPDATE
-        if(isset($_POST['btnSave'])) 
-        {
+        if (isset($_POST['btnSave'])) {
             // Lấy dữ liệu người dùng hiệu chỉnh gởi từ REQUEST POST
             $ten = $_POST['sp_ten'];
             $gia = $_POST['sp_gia'];
@@ -186,23 +173,28 @@
             $motangan = $_POST['sp_mota_ngan'];
             $motachitiet = $_POST['sp_mota_chitiet'];
             $ngaycapnhat = $_POST['sp_ngaycapnhat'];
-            $quantity = $_POST['sp_soluong'];
+            $soluong = $_POST['sp_soluong'];
             $lsp_ma = $_POST['lsp_ma'];
             $nsx_ma = $_POST['nsx_ma'];
-            $km_ma = empty($_POST['km_ma']) ? 'NULL' : $_POST['km_ma'];
-
+            $km_ma = (empty($_POST['km_ma']) ? 'NULL' : $_POST['km_ma']);
             // Câu lệnh INSERT
-            $sql = "INSERT INTO `sanpham` (sp_ten, sp_gia, sp_giacu, sp_mota_ngan, sp_mota_chitiet, sp_ngaycapnhat, sp_soluong, lsp_ma, nsx_ma, km_ma) VALUES ('$ten', $gia, $giacu, '$motangan', '$motachitiet', '$ngaycapnhat', $quantity, $lsp_ma, $nsx_ma, $km_ma);";
-            
+            $sql = "INSERT INTO `sanpham` (sp_ten, sp_gia, sp_giacu, sp_mota_ngan, sp_mota_chitiet, sp_ngaycapnhat, sp_soluong, lsp_ma, nsx_ma, km_ma) VALUES ('$ten', $gia, $giacu, '$motangan', '$motachitiet', '$ngaycapnhat', $soluong, $lsp_ma, $nsx_ma, $km_ma);";
             // Thực thi INSERT
             mysqli_query($conn, $sql);
-
             // Đóng kết nối
             mysqli_close($conn);
-
             // Sau khi cập nhật dữ liệu, tự động điều hướng về trang Danh sách
-            // header('location:index.php');
+            echo "<script>location.href = 'index.php';</script>";
         }
     ?>
+
+    <!-- footer -->
+    <?php include_once(__DIR__ . '/../../layouts/partials/footer.php'); ?>
+    <!-- End footer -->
+
+    <?php include_once(__DIR__ . '/../../layouts/scripts.php'); ?>
+
+    
+ 
 </body>
 </html>
