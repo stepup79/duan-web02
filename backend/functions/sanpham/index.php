@@ -117,18 +117,24 @@ EOT;
 
 
     <?php include_once(__DIR__ . '/../../layouts/scripts.php'); ?>
+    <!-- DataTable JS -->
     <script src="/duan-web02/assests/vendor/DataTables/datatables.min.js"></script>
     <script src="/duan-web02/assests/vendor/DataTables/Buttons-1.6.3/js/buttons.bootstrap4.min.js"></script>
     <script src="/duan-web02/assests/vendor/DataTables/pdfmake-0.1.36/pdfmake.min.js"></script>
     <script src="/duan-web02/assests/vendor/DataTables/pdfmake-0.1.36/vfs_fonts.js"></script>
+    <!-- SweetAlert JS -->
+    <script src="/duan-web02/assests/vendor/sweetalert/sweetalert.min.js"></script>
     <script>
     $(document).ready(function() {
+        // Xử lý DataTable
         $('#tblSanpham').DataTable( {
             dom: 'Bfrtip',
             buttons: [
                 'copy', 'excel', 'pdf'
             ]
         } );
+        // SweetAlert
+        swal("Hello world!");
     } );
     </script>
 </body>
