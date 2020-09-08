@@ -6,6 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Danh sách sản phẩm</title>
     <?php include_once(__DIR__ . '/../../layouts/styles.php'); ?>
+    <!-- DataTable CSS -->
+    <link href="/duan-web02/assests/vendor/DataTables/datatables.css" type="text/css" rel="stylesheet"/>
+    <link href="/duan-web02/assests/vendor/DataTables/Buttons-1.6.3/css/buttons.bootstrap4.css" type="text/css" rel="stylesheet"/>
 </head>
 <body>
     
@@ -75,30 +78,34 @@ EOT;
                     // print_r($data);die;
                 ?>
                 <a href="create.php" class="btn btn-primary">Thêm mới</a>
-                <table class="table table-bordered">
-                    <tr>
-                        <td>Mã sản phẩm</td>
-                        <td>Tên sản phẩm</td>
-                        <td>Giá sản phẩm</td>
-                        <td>Loại sản phẩm</td>
-                        <td>Nhà sản xuất</td>
-                        <td>Khuyến mãi</td>
-                        <td>Hành động</td>
-                    </tr>
-                    <?php foreach($data as $item):?>
+                <table id="tblSanpham" class="table table-bordered">
+                    <thead>
                         <tr>
-                            <td><?= $item['sp_ma']; ?></td>
-                            <td><?= $item['sp_ten']; ?></td>
-                            <td><?= $item['sp_gia']; ?></td>
-                            <td><?= $item['lsp_ten']; ?></td>
-                            <td><?= $item['nsx_ten']; ?></td>
-                            <td><?= $item['km_tomtat']; ?></td>
-                            <td>
-                                <a href="edit.php?masp=<?= $item['sp_ma'] ?>" class="btn btn-outline-warning">Sửa</a>
-                                <a href="delete.php?masp=<?= $item['sp_ma'] ?>" class="btn btn-outline-danger">Xóa</a>
-                            </td>
+                            <th>Mã sản phẩm</th>
+                            <th>Tên sản phẩm</th>
+                            <th>Giá sản phẩm</th>
+                            <th>Loại sản phẩm</th>
+                            <th>Nhà sản xuất</th>
+                            <th>Khuyến mãi</th>
+                            <th>Hành động</th>
                         </tr>
-                    <?php endforeach;?>
+                    </thead>
+                    <tbody>
+                        <?php foreach($data as $item):?>
+                                <tr>
+                                    <td><?= $item['sp_ma']; ?></td>
+                                    <td><?= $item['sp_ten']; ?></td>
+                                    <td><?= $item['sp_gia']; ?></td>
+                                    <td><?= $item['lsp_ten']; ?></td>
+                                    <td><?= $item['nsx_ten']; ?></td>
+                                    <td><?= $item['km_tomtat']; ?></td>
+                                    <td>
+                                        <a href="edit.php?masp=<?= $item['sp_ma'] ?>" class="btn btn-outline-warning">Sửa</a>
+                                        <a href="delete.php?masp=<?= $item['sp_ma'] ?>" class="btn btn-outline-danger">Xóa</a>
+                                    </td>
+                                </tr>
+                        <?php endforeach;?>
+                    </tbody>
                 </table>
             </div>
         </div>
@@ -110,5 +117,19 @@ EOT;
 
 
     <?php include_once(__DIR__ . '/../../layouts/scripts.php'); ?>
+    <script src="/duan-web02/assests/vendor/DataTables/datatables.min.js"></script>
+    <script src="/duan-web02/assests/vendor/DataTables/Buttons-1.6.3/js/buttons.bootstrap4.min.js"></script>
+    <script src="/duan-web02/assests/vendor/DataTables/pdfmake-0.1.36/pdfmake.min.js"></script>
+    <script src="/duan-web02/assests/vendor/DataTables/pdfmake-0.1.36/vfs_fonts.js"></script>
+    <script>
+    $(document).ready(function() {
+        $('#tblSanpham').DataTable( {
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'excel', 'pdf'
+            ]
+        } );
+    } );
+    </script>
 </body>
 </html>
