@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <?php include_once(__DIR__ . '/../../layouts/styles.php'); ?>
+    <!-- DataTable CSS -->
+    <link href="/duan-web02/assests/vendor/DataTables/datatables.css" type="text/css" rel="stylesheet"/>
+    <link href="/duan-web02/assests/vendor/DataTables/Buttons-1.6.3/css/buttons.bootstrap4.css" type="text/css" rel="stylesheet"/>
 </head>
 <body>
     
@@ -47,12 +50,14 @@ EOT;
                     // print_r($data);die;
                 ?>
                     <a href="create.php" class="btn btn-primary">Thêm mới</a>
-                    <table border="1" width="100%">
-                        <tr>
-                            <th>Mã thanh toán</th>
-                            <th>Tên thanh toán</th>
-                            <th>Hành động</th>
-                        </tr>
+                    <table id="tblHinhthuc" class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Mã thanh toán</th>
+                                <th>Tên thanh toán</th>
+                                <th>Hành động</th>
+                            </tr>
+                        </thead>
                         <?php foreach($data as $item): ?>
                         <tr>
                             <!-- Dấu '=' tương ứng với php echo -->
@@ -60,7 +65,7 @@ EOT;
                             <td><?= $item['ten']; ?></td>
                             <td>
                                 <a href="edit.php?idmuonxoa=<?= $item['ma'] ?>" class="btn btn-outline-warning">Sửa</a>
-                                <a href="delete.php?idmuonxoa=<?= $item['ma'] ?>" class="btn btn-outline-danger">Xóa</a>
+                                <button class="btn btn-danger btnDelete" data-ma="<?= $item['ma'] ?>">Xóa</button>
                             </td>
                         
                         </tr>
@@ -76,5 +81,42 @@ EOT;
 
 
     <?php include_once(__DIR__ . '/../../layouts/scripts.php'); ?>
+    <!-- DataTable JS -->
+    <script src="/duan-web02/assests/vendor/DataTables/datatables.min.js"></script>
+    <script src="/duan-web02/assests/vendor/DataTables/Buttons-1.6.3/js/buttons.bootstrap4.min.js"></script>
+    <script src="/duan-web02/assests/vendor/DataTables/pdfmake-0.1.36/pdfmake.min.js"></script>
+    <script src="/duan-web02/assests/vendor/DataTables/pdfmake-0.1.36/vfs_fonts.js"></script>
+    <!-- SweetAlert JS -->
+    <script src="/duan-web02/assests/vendor/sweetalert/sweetalert.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        // Xử lý DataTable
+        $('#tblHinhthuc').DataTable( {
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'excel', 'pdf'
+            ]
+        });
+        $('.btnDelete').click(function() {
+            swal({
+                title: "Bạn có chắc muốn xóa?",
+                text: "Khi xóa sẽ không thể phục hồi!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+                })
+                .then((willDelete) => {
+                if (willDelete) {
+                    var ma = $(this).data('ma');
+                    var url = "delete.php?ma=" + ma;
+                    // Điều hướng sang trang xóa với REQUEST GET cùng tham số idmuonxoa=...
+                    location.href = url;
+                } else {
+                    swal("Bạn hãy cẩn thận hơn!");
+                }
+                });
+            })
+    })
+    </script>
 </body>
 </html>

@@ -100,8 +100,8 @@ EOT;
                                     <td><?= $item['nsx_ten']; ?></td>
                                     <td><?= $item['km_tomtat']; ?></td>
                                     <td>
-                                        <a href="edit.php?masp=<?= $item['sp_ma'] ?>" class="btn btn-outline-warning">Sửa</a>
-                                        <a href="delete.php?masp=<?= $item['sp_ma'] ?>" class="btn btn-outline-danger">Xóa</a>
+                                        <a href="edit.php?masp=<?= $item['sp_ma'] ?>" class="btn btn-warning">Sửa</a>
+                                        <button class="btn btn-danger btnDelete" data-sp_ma="<?= $item['sp_ma'] ?>">Xóa</button>
                                     </td>
                                 </tr>
                         <?php endforeach;?>
@@ -115,7 +115,6 @@ EOT;
     <?php include_once(__DIR__ . '/../../layouts/partials/footer.php'); ?>
     <!-- End footer -->
 
-
     <?php include_once(__DIR__ . '/../../layouts/scripts.php'); ?>
     <!-- DataTable JS -->
     <script src="/duan-web02/assests/vendor/DataTables/datatables.min.js"></script>
@@ -124,6 +123,7 @@ EOT;
     <script src="/duan-web02/assests/vendor/DataTables/pdfmake-0.1.36/vfs_fonts.js"></script>
     <!-- SweetAlert JS -->
     <script src="/duan-web02/assests/vendor/sweetalert/sweetalert.min.js"></script>
+
     <script>
     $(document).ready(function() {
         // Xử lý DataTable
@@ -132,10 +132,27 @@ EOT;
             buttons: [
                 'copy', 'excel', 'pdf'
             ]
-        } );
-        // SweetAlert
-        swal("Hello world!");
-    } );
+        });
+        $('.btnDelete').click(function() {
+            swal({
+                title: "Bạn có chắc muốn xóa?",
+                text: "Khi xóa sẽ không thể phục hồi!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+                })
+                .then((willDelete) => {
+                if (willDelete) {
+                    var sp_ma = $(this).data('sp_ma');
+                    var url = "delete.php?sp_ma=" + sp_ma;
+                    // Điều hướng sang trang xóa với REQUEST GET cùng tham số sp_ma=...
+                    location.href = url;
+                } else {
+                    swal("Bạn hãy cẩn thận hơn!");
+                }
+                });
+            })
+        });
     </script>
 </body>
 </html>
