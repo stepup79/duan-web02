@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chỉnh sửa hình thức thanh toán</title>
+    <title>Cập nhật loại sản phẩm</title>
     <?php include_once(__DIR__ . '/../../layouts/styles.php'); ?>
 </head>
 <body>
@@ -21,17 +21,16 @@
             <?php
                 //Select lấy dữ liệu của id muốn xóa vào ô input
                 //Lấy id muốn xóa
-                $httt_ma = $_GET['httt_ma'];
+                $lsp_ma = $_GET['lsp_ma'];
 
                 // Truy vấn database để lấy danh sách
                 // 1. Include file cấu hình kết nối đến database, khởi tạo kết nối $conn
                 include_once(__DIR__ . '/../../../dbconnect.php');
-                // include_once(__DIR__ . '/dbconnect.php');
 
                 // 2. Chuẩn bị QUERY
                 $sqlSelect =<<<EOT
-                    SELECT httt_ma, httt_ten FROM `hinhthucthanhtoan`
-                    WHERE httt_ma = $httt_ma
+                    SELECT lsp_ma, lsp_ten, lsp_mota FROM `loaisanpham`
+                    WHERE lsp_ma = $lsp_ma
 EOT;
 
                 // 3. Thực thi QUERY
@@ -43,43 +42,40 @@ EOT;
                 $data = [];
                 while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
                     $data = array( // Lấy 1 dòng dữ liệu nên data ko có mảng data[]
-                        'httt_ma' => $row['httt_ma'],
-                        'httt_ten' => $row['httt_ten'],
+                        'lsp_ma' => $row['lsp_ma'],
+                        'lsp_ten' => $row['lsp_ten'],
+                        'lsp_mota' => $row['lsp_mota'],
                     );
                 }
 
             ?>
 
             <div class="col-md-8">
-                <h2>Thực hành form Edit</h2>
+                <h2>Cập nhật Loại sản phẩm</h2>
                 <form name="frmUpdate" id="frmUpdate" method="post" action="">
-                    <table>
-                        <tr>
-                            <td><label for="txt_httt_ten">Sửa hình thức thanh toán</label></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="form-group">                                    
-                                    <input type="text" class="form-control" id="txt_httt_ten" name="txt_httt_ten" value="<?php echo $data['httt_ten']?>">
-                                </div>
-                                <button name="btnLuu" id="btnLuu" class="btn btn-primary">Lưu dữ liệu</button>
-                                <a href="index.php" class="btn btn-outline-primary">Quay về danh sách</a>
-                            </td>           
-                        </tr>
-                    </table>
+                    <div class="form-group">
+                        <label for="lsp_ten">Loại sản phẩm</label>                                    
+                        <input type="text" class="form-control" id="lsp_ten" name="lsp_ten" value="<?php echo $data['lsp_ten']?>">
+                    </div>
+                    <div class="form-group">
+                        <label for="lsp_mota">Mô tả</label>
+                        <input type="text" class="form-control" id="lsp_mota" name="lsp_mota">
+                    </div>
+                    <button name="btnSave" id="btnSave" class="btn btn-primary">Lưu dữ liệu</button>                            
                 </form>
 
             <?php
 
                 // Khi người dùng nhấn button Lưu
-                if(isset($_POST['btnLuu'])) {
+                if(isset($_POST['btnSave'])) {
                     // 1. Lấy dữ liệu người dùng nhập vào
-                    $httt_ten = $_POST['txt_httt_ten'];
+                    $lsp_ten = $_POST['lsp_ten'];
+                    $lsp_mota = $_POST['lsp_mota'];
                     // 2. Chuẩn bị QUERY
                     $sql =<<<EOT
-                        UPDATE hinhthucthanhtoan
-                        SET httt_ten = (N'$httt_ten')
-                        WHERE httt_ma = $httt_ma;
+                        UPDATE loaisanpham
+                        SET lsp_ten = (N'$lsp_ten'), lsp_mota = (N'$lsp_mota')
+                        WHERE lsp_ma = $lsp_ma;
 EOT;
 
                     // 3. Thực thi
@@ -142,9 +138,10 @@ EOT;
         // include_once(__DIR__ . '/../../../dbconnect.php');
 
         // 2. Nếu người dùng có bấm nút "Lưu dữ liệu" thì kiểm tra VALIDATE dữ liệu
-        if(isset($_POST['btnLuu'])) {
+        if(isset($_POST['btnSave'])) {
         // Lấy dữ liệu người dùng hiệu chỉnh gởi từ REQUEST POST
-        $httt_ten = $_POST['txt_httt_ten'];
+        $lsp_ten = $_POST['lsp_ten'];
+        $lsp_mota = $_POST['lsp_mota'];
 
         // Kiểm tra ràng buộc dữ liệu (Validation)
         // Tạo biến lỗi để chứa thông báo lỗi
@@ -152,30 +149,30 @@ EOT;
         
         // Validate tên Hình thức sản phẩm   
         // required
-            if (empty($httt_ten)) {
-                $errors['txt_httt_ten'][] = [
+            if (empty($lsp_ten)) {
+                $errors['lsp_ten'][] = [
                 'rule' => 'required',
                 'rule_value' => true,
-                'value' => $httt_ten,
-                'msg' => 'Vui lòng nhập Hình thức sản phẩm'
+                'value' => $lsp_ten,
+                'msg' => 'Vui lòng nhập Loại sản phẩm'
                 ];
             }
         // minlength 3
-            if (!empty($httt_ten) && strlen($httt_ten) < 3) {
-                $errors['txt_httt_ten'][] = [
+            if (!empty($lsp_ten) && strlen($lsp_ten) < 3) {
+                $errors['lsp_ten'][] = [
                 'rule' => 'minlength',
                 'rule_value' => 3,
-                'value' => $httt_ten,
-                'msg' => 'Hình thức sản phẩm phải có ít nhất 3 ký tự'
+                'value' => $lsp_ten,
+                'msg' => 'Loại sản phẩm phải có ít nhất 3 ký tự'
                 ];
             }
         // maxlength 50
-            if (!empty($httt_ten) && strlen($httt_ten) > 50) {
-                $errors['txt_httt_ten'][] = [
+            if (!empty($lsp_ten) && strlen($lsp_ten) > 50) {
+                $errors['lsp_ten'][] = [
                 'rule' => 'maxlength',
                 'rule_value' => 50,
-                'value' => $httt_ten,
-                'msg' => 'Tên Hình thức sản phẩm không được vượt quá 50 ký tự'
+                'value' => $lsp_ten,
+                'msg' => 'Tên loại sản phẩm không được vượt quá 50 ký tự'
                 ];
             }
         }
@@ -186,7 +183,7 @@ EOT;
         - Mỗi một lỗi hiển thị sẽ in theo cấu trúc Danh sách không thứ tự UL > LI
         -->
         <?php if (
-            isset($_POST['btnLuu'])  // Nếu người dùng có bấm nút "Lưu dữ liệu"
+            isset($_POST['btnSave'])  // Nếu người dùng có bấm nút "Lưu dữ liệu"
             && isset($errors)         // Nếu biến $errors có tồn tại
             && (!empty($errors))      // Nếu giá trị của biến $errors không rỗng
         ) : ?>
@@ -206,15 +203,15 @@ EOT;
 
     <?php
     // Khi người dùng nhấn button Lưu
-    if(isset($_POST['btnLuu']) && (!isset($errors) || (empty($errors))) 
+    if(isset($_POST['btnSave']) && (!isset($errors) || (empty($errors))) 
     )   {
         // VALIDATE dữ liệu đã hợp lệ
         // Thực thi câu lệnh SQL QUERY
         // 2. Chuẩn bị QUERY
         $sql =<<<EOT
-                        UPDATE hinhthucthanhtoan
-                        SET httt_ten = (N'$httt_ten')
-                        WHERE httt_ma = $httt_ma;
+            UPDATE loaisanpham
+            SET lsp_ten = (N'$lsp_ten'), lsp_mota = (N'$lsp_mota')
+            WHERE lsp_ma = $lsp_ma;
 EOT;
 
         // 3. Thực thi

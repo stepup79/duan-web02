@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Danh mục hình thức thanh toán</title>
+    <title>Danh mục loại sản phẩm</title>
     <?php include_once(__DIR__ . '/../../layouts/styles.php'); ?>
     <!-- DataTable CSS -->
     <link href="/duan-web02/assests/vendor/DataTables/datatables.css" type="text/css" rel="stylesheet"/>
@@ -21,7 +21,7 @@
             <?php include_once(__DIR__ . '/../../layouts/partials/sidebar.php'); ?>
             <!-- End sidebar -->
             <div class="col-md-8">
-                <h2>Danh sách Hình thức thanh toán</h2>
+                <h2>Danh sách Loại sản phẩm</h2>
                 <?php
                     // Truy vấn database để lấy danh sách
                     // 1. Include file cấu hình kết nối đến database, khởi tạo kết nối $conn
@@ -29,7 +29,7 @@
                     // include_once(__DIR__ . '/dbconnect.php');
 
                     // 2. Chuẩn bị QUERY
-                    $sql ="SELECT httt_ma, httt_ten FROM `hinhthucthanhtoan`";
+                    $sql ="SELECT lsp_ma, lsp_ten, lsp_mota FROM `loaisanpham`";
 
                     // 3. Thực thi QUERY
                     $result = mysqli_query($conn, $sql);
@@ -40,30 +40,33 @@
                     $data = [];
                     while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
                         $data[] = array(
-                            'httt_ma' => $row['httt_ma'],
-                            'httt_ten' => $row['httt_ten'],
+                            'lsp_ma' => $row['lsp_ma'],
+                            'lsp_ten' => $row['lsp_ten'],
+                            'lsp_mota' => $row['lsp_mota'],
                         );
                     }
                     // var_dump($data);die;
                     // print_r($data);die;
                 ?>
                     <a href="create.php" class="btn btn-primary">Thêm mới</a>
-                    <table id="tblHinhthuc" class="table table-bordered">
+                    <table id="tblLoaisanpham" class="table table-bordered">
                         <thead>
                             <tr>
-                                <th>Mã thanh toán</th>
-                                <th>Tên thanh toán</th>
+                                <th>Mã loại sản phẩm</th>
+                                <th>Tên loại sản phẩm</th>
+                                <th>Mô tả</th>
                                 <th>Hành động</th>
                             </tr>
                         </thead>
                         <?php foreach($data as $item): ?>
                         <tr>
                             <!-- Dấu '=' tương ứng với php echo -->
-                            <td><?php echo $item['httt_ma']; ?></td>
-                            <td><?= $item['httt_ten']; ?></td>
+                            <td><?php echo $item['lsp_ma']; ?></td>
+                            <td><?= $item['lsp_ten']; ?></td>
+                            <td><?= $item['lsp_mota']; ?></td>
                             <td>
-                                <a href="edit.php?httt_ma=<?= $item['httt_ma'] ?>" class="btn btn-outline-warning">Sửa</a>
-                                <button class="btn btn-danger btnDelete" data-httt_ma="<?= $item['httt_ma'] ?>">Xóa</button>
+                                <a href="edit.php?lsp_ma=<?= $item['lsp_ma'] ?>" class="btn btn-outline-warning">Sửa</a>
+                                <button class="btn btn-danger btnDelete" data-lsp_ma="<?= $item['lsp_ma'] ?>">Xóa</button>
                             </td>
                         
                         </tr>
@@ -89,7 +92,7 @@
     <script>
     $(document).ready(function() {
         // Xử lý DataTable
-        $('#tblHinhthuc').DataTable( {
+        $('#tblLoaisanpham').DataTable( {
             dom: 'Bfrtip',
             buttons: [
                 'copy', 'excel', 'pdf'
@@ -106,9 +109,9 @@
                 .then((willDelete) => {
                     // debugger;
                 if (willDelete) {
-                    var httt_ma = $(this).data('httt_ma');
-                    var url = "delete.php?httt_ma=" + httt_ma;
-                    // Điều hướng sang trang xóa với REQUEST GET cùng tham số httt_ma=...
+                    var lsp_ma = $(this).data('lsp_ma');
+                    var url = "delete.php?lsp_ma=" + lsp_ma;
+                    // Điều hướng sang trang xóa với REQUEST GET cùng tham số lsp_ma=...
                     location.href = url;
                 } else {
                     swal("Bạn hãy cẩn thận hơn!");

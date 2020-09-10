@@ -142,6 +142,7 @@ EOT;
                 dangerMode: true,
                 })
                 .then((willDelete) => {
+                    // debugger;
                 if (willDelete) {
                     var sp_ma = $(this).data('sp_ma');
                     var url = "delete.php?sp_ma=" + sp_ma;

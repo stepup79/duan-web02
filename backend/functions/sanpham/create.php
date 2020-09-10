@@ -164,8 +164,8 @@
     </div>
 
     <?php
-        // 2. Nếu người dùng có bấm nút Đăng ký thì thực thi câu lệnh UPDATE
-        if (isset($_POST['btnSave'])) {
+        // 2. Nếu người dùng có bấm nút Lưu thì thực thi câu lệnh INSERT
+        if (isset($_POST['btnSave'])) {           
             // Lấy dữ liệu người dùng hiệu chỉnh gởi từ REQUEST POST
             $ten = $_POST['sp_ten'];
             $gia = $_POST['sp_gia'];
@@ -193,8 +193,7 @@
     <!-- End footer -->
 
     <?php include_once(__DIR__ . '/../../layouts/scripts.php'); ?>
-
-    
+   
  
 </body>
 </html>

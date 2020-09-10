@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Thêm mới danh mục hình thức thanh toán</title>
     <?php include_once(__DIR__ . '/../../layouts/styles.php'); ?>
 </head>
 <body>
