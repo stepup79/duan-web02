@@ -100,7 +100,7 @@ EOT;
                                     <td><?= $item['nsx_ten']; ?></td>
                                     <td><?= $item['km_tomtat']; ?></td>
                                     <td>
-                                        <a href="edit.php?masp=<?= $item['sp_ma'] ?>" class="btn btn-warning">Sửa</a>
+                                        <a href="edit.php?sp_ma=<?= $item['sp_ma'] ?>" class="btn btn-warning">Sửa</a>
                                         <button class="btn btn-danger btnDelete" data-sp_ma="<?= $item['sp_ma'] ?>">Xóa</button>
                                     </td>
                                 </tr>
