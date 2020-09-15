@@ -13,7 +13,7 @@
     <?php include_once(__DIR__ . '/../layouts/partials/header.php'); ?>
     <!-- End header -->
 
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
             <!-- sidebar -->
             <?php include_once(__DIR__ . '/../layouts/partials/sidebar.php'); ?>
@@ -32,7 +32,7 @@
                                     <div>Tổng số mặt hàng</div>                            
                                 </div>
                             </div>
-                            <button class="btn btn-primary form-control" id="refreshBaoCaoSanPham">Refresh dữ liệu</button>
+                            <button class="btn btn-primary btn-sm form-control" id="refreshBaoCaoSanPham">Refresh dữ liệu</button>
                         </div> <!-- Tổng số mặt hàng -->
                         <div class="col-sm-6 col-lg-3">
                             <div class="card text-white bg-success mb-2">
@@ -67,7 +67,8 @@
                             </div>
                             <button class="btn btn-danger btn-sm form-control" id="refreshBaoCaoGopY">Refresh dữ liệu</button>
                         </div> <!-- Tổng số góp ý -->
-
+                        <canvas id="myChart" width="400" height="400"></canvas>
+                        <button class="btn btn-outline-primary btn-sm form-control" id="refreshThongKeLoaiSanPham">Refresh dữ liệu</button>
                     </div>
                 </div>
                 <!-- End content -->
@@ -159,14 +160,67 @@
                 event.preventDefault();
                 getDuLieuBaoCaoTongSoGopY();
             });
+            // ------------------ Vẽ biểu đồ thống kê Loại sản phẩm -----------------
+            // Vẽ biểu đổ Thống kê Loại sản phẩm sử dụng ChartJS
+            var objChartThongKeLoaiSanPham;
+            var chartOfobjChartThongKeLoaiSanPham = document.getElementById("chartOfobjChartThongKeLoaiSanPham").getContext("2d");
+            function renderChartThongKeLoaiSanPham() {
+                $.ajax({
+                    url:'/duan-web02/backend/api/baocao-thongkeloaisanpham.php',
+                    type:'GET',
+                    success: function(response);
+                        var data = JSON.parse(response);
+                        var myLabels = [];
+                        var myData = [];
+                        $(data).each(function() {
+                            myLabels.push(this.TenLoaiSanPham);
+                            myData.push(this.SoLuong);
+                        });
+                        myData.push(0); // tạo dòng số liệu 0
+                        if (typeof $objChartThongKeLoaiSanPham !== "undefined") {
+                        $objChartThongKeLoaiSanPham.destroy();
+                        }
+                        $objChartThongKeLoaiSanPham = new Chart($chartOfobjChartThongKeLoaiSanPham, {
+                        // Kiểu biểu đồ muốn vẽ. Các bạn xem thêm trên trang ChartJS
+                        type: "bar",
+                        data: {
+                            labels: myLabels,
+                            datasets: [{
+                            data: myData,
+                            borderColor: "#9ad0f5",
+                            backgroundColor: "#9ad0f5",
+                            borderWidth: 1
+                            }]
+                        },
+                        // Cấu hình dành cho biểu đồ của ChartJS
+                        options: {
+                            legend: {
+                            display: false
+                            },
+                            title: {
+                            display: true,
+                            text: "Thống kê Loại sản phẩm"
+                            },
+                            responsive: true
+                            }
+                        });
+                    }
+                });
+            };
+            $('#refreshThongKeLoaiSanPham').click(function(event) {
+                event.preventDefault();
+                renderChartThongKeLoaiSanPham();
+            });
+
+
             // Mới mở web (khi trang web load xong)
             // thì sẽ gọi lập tức một số hàm AJAX gọi API lấy dữ liệu
             getDuLieuBaoCaoTongSoMatHang();
             getDuLieuBaoCaoTongSoKhachHang();
             getDuLieuBaoCaoTongSoDonHang();
             getDuLieuBaoCaoTongSoGopY();
-            // renderChartThongKeLoaiSanPham();
-        })
+            renderChartThongKeLoaiSanPham();
+        });
     </script>
 </body>
 </html>
