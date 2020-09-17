@@ -137,8 +137,11 @@ EOT;
             <tbody>
                 <tr>
                     <td width="30%">Khách hàng:</td>
-                    <td><b><?= $dataDonDatHang['kh_ten'] ?>
-                            (<?= $dataDonDatHang['kh_dienthoai'] ?>)</b></td>
+                    <td><b><?= $dataDonDatHang['kh_ten'] ?></b></td>
+                </tr>
+                <tr>
+                    <td>Điện thoại liên hệ:</td>
+                    <td><b><?= $dataDonDatHang['kh_dienthoai'] ?></b></td>
                 </tr>
                 <tr>
                     <td>Ngày lập:</td>
