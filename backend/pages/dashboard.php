@@ -1,3 +1,12 @@
+<?php
+// hàm `session_id()` sẽ trả về giá trị SESSION_ID (tên file session do Web Server tự động tạo)
+// - Nếu trả về Rỗng hoặc NULL => chưa có file Session tồn tại
+if (session_id() === '') {
+  // Yêu cầu Web Server tạo file Session để lưu trữ giá trị tương ứng với CLIENT (Web Browser đang gởi Request)
+  session_start();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +15,7 @@
     <title>Document</title>
     <!-- Nhúng file Quản lý các Liên kết CSS dùng chung cho toàn bộ trang web -->
     <?php include_once(__DIR__ . '/../layouts/styles.php'); ?>
+    
 </head>
 <body>
     
@@ -67,7 +77,7 @@
                             </div>
                             <button class="btn btn-danger btn-sm form-control" id="refreshBaoCaoGopY">Refresh dữ liệu</button>
                         </div> <!-- Tổng số góp ý -->
-                        <canvas id="myChart" width="400" height="400"></canvas>
+                        <canvas id="chartOfobjChartThongKeLoaiSanPham"></canvas>
                         <button class="btn btn-outline-primary btn-sm form-control" id="refreshThongKeLoaiSanPham">Refresh dữ liệu</button>
                     </div>
                 </div>
@@ -84,7 +94,7 @@
     <?php include_once(__DIR__ . '/../layouts/scripts.php'); ?>
     <!-- Các file Javascript sử dụng riêng cho trang này, liên kết tại đây -->
     <!-- Liên kết thư viện ChartJS -->
-    <script src="/duan-web02/assets/vendor/Chart.js/Chart.min.js"></script>
+    <script src="/duan-web02/assests/vendor/Chart.js/Chart.min.js"></script>
 
     <script>
         $(document).ready(function() {
@@ -162,49 +172,50 @@
             });
             // ------------------ Vẽ biểu đồ thống kê Loại sản phẩm -----------------
             // Vẽ biểu đổ Thống kê Loại sản phẩm sử dụng ChartJS
-            var objChartThongKeLoaiSanPham;
-            var chartOfobjChartThongKeLoaiSanPham = document.getElementById("chartOfobjChartThongKeLoaiSanPham").getContext("2d");
+            var $objChartThongKeLoaiSanPham;
+            var $chartOfobjChartThongKeLoaiSanPham = document.getElementById("chartOfobjChartThongKeLoaiSanPham").getContext(
+                "2d");
             function renderChartThongKeLoaiSanPham() {
                 $.ajax({
-                    url:'/duan-web02/backend/api/baocao-thongkeloaisanpham.php',
-                    type:'GET',
-                    success: function(response);
-                        var data = JSON.parse(response);
-                        var myLabels = [];
-                        var myData = [];
-                        $(data).each(function() {
-                            myLabels.push(this.TenLoaiSanPham);
-                            myData.push(this.SoLuong);
-                        });
-                        myData.push(0); // tạo dòng số liệu 0
-                        if (typeof $objChartThongKeLoaiSanPham !== "undefined") {
-                        $objChartThongKeLoaiSanPham.destroy();
-                        }
-                        $objChartThongKeLoaiSanPham = new Chart($chartOfobjChartThongKeLoaiSanPham, {
-                        // Kiểu biểu đồ muốn vẽ. Các bạn xem thêm trên trang ChartJS
-                        type: "bar",
-                        data: {
-                            labels: myLabels,
-                            datasets: [{
-                            data: myData,
-                            borderColor: "#9ad0f5",
-                            backgroundColor: "#9ad0f5",
-                            borderWidth: 1
-                            }]
-                        },
-                        // Cấu hình dành cho biểu đồ của ChartJS
-                        options: {
-                            legend: {
-                            display: false
-                            },
-                            title: {
-                            display: true,
-                            text: "Thống kê Loại sản phẩm"
-                            },
-                            responsive: true
-                            }
-                        });
+                url: '/duan-web02/backend/api/baocao-thongkeloaisanpham.php',
+                type: "GET",
+                success: function(response) {
+                    var data = JSON.parse(response);
+                    var myLabels = [];
+                    var myData = [];
+                    $(data).each(function() {
+                    myLabels.push((this.TenLoaiSanPham));
+                    myData.push(this.SoLuong);
+                    });
+                    myData.push(0); // tạo dòng số liệu 0
+                    if (typeof $objChartThongKeLoaiSanPham !== "undefined") {
+                    $objChartThongKeLoaiSanPham.destroy();
                     }
+                    $objChartThongKeLoaiSanPham = new Chart($chartOfobjChartThongKeLoaiSanPham, {
+                    // Kiểu biểu đồ muốn vẽ. Các bạn xem thêm trên trang ChartJS
+                    type: "bar",
+                    data: {
+                        labels: myLabels,
+                        datasets: [{
+                        data: myData,
+                        borderColor: "#9ad0f5",
+                        backgroundColor: "#9ad0f5",
+                        borderWidth: 1
+                        }]
+                    },
+                    // Cấu hình dành cho biểu đồ của ChartJS
+                    options: {
+                        legend: {
+                        display: false
+                        },
+                        title: {
+                        display: true,
+                        text: "Thống kê Loại sản phẩm"
+                        },
+                        responsive: true
+                    }
+                    });
+                }
                 });
             };
             $('#refreshThongKeLoaiSanPham').click(function(event) {

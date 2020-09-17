@@ -72,6 +72,21 @@
         </ul>
       </li>
       <!-- End Menu Chuyên mục nhà sản xuất -->
+      <!-- Menu Hình Sản phẩm -->
+      <li class="nav-item">
+        <a href="#hinhsanphamSubMenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+          Hình Sản phẩm
+        </a>
+        <ul class="collapse" id="hinhsanphamSubMenu">
+          <li class="nav-item">
+            <a href="/duan-web02/backend/functions/hinhsanpham/index.php">Danh sách</a>
+          </li>
+          <li class="nav-item">
+            <a href="/duan-web02/backend/functions/hinhsanpham/create.php">Thêm mới</a>
+          </li>
+        </ul>
+      </li>
+      <!-- End Hình Sản phẩm -->
       <!-- #################### End Menu chức năng Danh mục #################### -->
     </ul>
   </div>
