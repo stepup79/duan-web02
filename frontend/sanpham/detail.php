@@ -474,7 +474,7 @@ EOT;
                 success: function(data) {
                     console.log(data);
                     var htmlString =
-                        `Sản phẩm đã được thêm vào Giỏ hàng. <a href="/duan-web02/frontend/thanhtoan/giohang.php">Xem Giỏ hàng</a>.`;
+                        `Sản phẩm đã được thêm vào Giỏ hàng. <a href="/duan-web02/frontend/thanhtoan/cart.php">Xem Giỏ hàng</a>.`;
                     $('#thongbao').html(htmlString);
                     // Hiện thông báo
                     $('.alert').removeClass('d-none').addClass('show');
